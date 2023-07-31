@@ -113,21 +113,21 @@ resource "aws_wafv2_web_acl" "main" {
           content {
             arn = lookup(rule_group_reference_statement.value, "arn")
 
-            dynamic "rule_action_override" {
-              for_each = lookup(rule_group_reference_statement.value, "rule_action_overrides", null) == null ? [] : lookup(rule_group_reference_statement.value, "rule_action_overrides")
-              content {
-                name = lookup(rule_action_override.value, "name")
-                dynamic "action_to_use" {
-                  for_each = [lookup(rule_action_override.value, "action_to_use")]
-                  content {
-                    dynamic "count" {
-                      for_each = lookup(action_to_use.value, "count", null) == null ? [] : [lookup(action_to_use.value, "count")]
-                      content {}
-                    }
-                  }
-                }
-              }
-            }
+            # dynamic "rule_action_override" {
+            #   for_each = lookup(rule_group_reference_statement.value, "rule_action_overrides", null) == null ? [] : lookup(rule_group_reference_statement.value, "rule_action_overrides")
+            #   content {
+            #     name = lookup(rule_action_override.value, "name")
+            #     dynamic "action_to_use" {
+            #       for_each = [lookup(rule_action_override.value, "action_to_use")]
+            #       content {
+            #         dynamic "count" {
+            #           for_each = lookup(action_to_use.value, "count", null) == null ? [] : [lookup(action_to_use.value, "count")]
+            #           content {}
+            #         }
+            #       }
+            #     }
+            #   }
+            # }
           }
         }
 
